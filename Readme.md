@@ -74,7 +74,7 @@ http://localhost:3000/card/cla1noq6a0000v6ho2g3u6iet
   <img alt="Generate page" src="assets/generate.png" width="350" title="hover text">
     <img src="assets/card.png" width="350" alt="Presentation page">
 </div>
-<div style="display:flex; justify-content:center">
+<div style="display:flex; justify-content:center; width:100%">
   <img src="assets/qrcode.png" width="350" alt="QRCode page">
 </div>
 
