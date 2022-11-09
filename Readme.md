@@ -11,7 +11,7 @@ enter backend folder then
 
 - rename the file .env.example to .env
 - run yarn install
-- run yarn prisma migrate
+- run yarn prisma migrate deploy
 - run yarn dev
 
 then you good to go to frontend
