@@ -1,12 +1,14 @@
 import { NextPage, GetServerSideProps } from "next";
 import Link from "next/link";
 
-import { AiFillLinkedin, AiFillGithub } from "react-icons/ai";
+import { AiFillLinkedin, AiFillGithub, AiFillInstagram } from "react-icons/ai";
+import { getGithubUsername } from "../../utils/getGithubUsername";
 
 type User = {
   name: string;
   github: string;
   linkedin: string;
+  instagram: string;
 };
 
 type Props = {
@@ -39,6 +41,13 @@ export default function Presentation({ user, bio }: Props) {
               Github
             </button>
           </Link>
+
+          <Link href={user.instagram} target="_blank">
+            <button className="flex items-center justify-center bg-blue-500 px-4 md:px-8 h-8 rounded-lg text-gray-300 text-xl shadow-md outline-none hover:text-blue-800 transition-all duration-300 ease-in-out">
+              <AiFillInstagram />
+              Instagram
+            </button>
+          </Link>
         </div>
       </div>
     </div>
@@ -49,11 +58,11 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { id } = ctx.query;
 
   const response = await fetch(`http://localhost:3333/api/user/${id}`);
-  const user = await response.json();
+  const user: User = await response.json();
 
-  const gitUser = user.github.split("https://github.com/");
-
-  const res = await fetch(`https://api.github.com/users/${gitUser[1]}`);
+  const res = await fetch(
+    `https://api.github.com/users/${getGithubUsername(user.github)}`
+  );
   const { bio } = await res.json();
 
   return {

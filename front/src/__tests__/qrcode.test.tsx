@@ -10,15 +10,15 @@ jest.mock("next/router", () => {
   };
 });
 
-jest.mock("downloadjs", () => {
-  return {
-    download: () => jest.fn(),
-  };
-});
-
 describe("QRCode Page", () => {
   it("renders without crashing", () => {
     render(<QRCode />);
+
+    expect(
+      screen.getByRole("button", {
+        name: "Download QRCode",
+      })
+    ).toBeInTheDocument();
 
     expect(
       screen.getByRole("heading", { name: "Scan Me" })

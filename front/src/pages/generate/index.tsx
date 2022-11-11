@@ -11,6 +11,7 @@ type FormData = {
   userName: string;
   linkedinUrl: string;
   githubUrl: string;
+  instagramUrl: string;
 };
 
 const schema = yup.object({
@@ -27,6 +28,13 @@ const schema = yup.object({
     .matches(
       /^[https://github.com]+\/[a-zA-z0-9-]+$/,
       "please provide a github profile address"
+    )
+    .url("must be a valid url"),
+  instagramUrl: yup
+    .string()
+    .matches(
+      /^[https://www.instagram.com]+\/[a-z\.A-Z-0-9]+$/,
+      "please provide a instagram profile address"
     )
     .url("must be a valid url"),
 });
@@ -47,6 +55,7 @@ export default function Generate() {
       name: data.userName,
       githubUrl: data.githubUrl,
       linkedinUrl: data.linkedinUrl,
+      instagramUrl: data.instagramUrl,
     };
     const response = await fetch("http://localhost:3333/api/card/generate", {
       method: "POST",
@@ -93,6 +102,14 @@ export default function Generate() {
             labelText="Github URL"
             placeholder="https://github.com/als260502"
             name="githubUrl"
+          />
+
+          <Input
+            {...register("instagramUrl")}
+            error={errors.instagramUrl?.message}
+            labelText="Github URL"
+            placeholder="https://instagram.com/velhoo.np"
+            name="instagramUrl"
           />
 
           <Button buttonText="Generate Image" />

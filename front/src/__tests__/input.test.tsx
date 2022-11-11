@@ -17,7 +17,7 @@ jest.mock("next/router", () => {
 });
 
 describe("Inputs", () => {
-  it("Should have a input to name, linkedin-Url and github-url", () => {
+  it("Should have a input to name, linkedin-Url, instagram-url and github-url", () => {
     render(<Generate />);
 
     const nameField = screen.getByPlaceholderText("Input your name");
@@ -28,9 +28,32 @@ describe("Inputs", () => {
       "https://github.com/als260502"
     );
 
+    const instagramUrlField = screen.getByPlaceholderText(
+      "https://instagram.com/velhoo.np"
+    );
+
     expect(nameField).toBeInTheDocument();
     expect(linkedinUrlField).toBeInTheDocument();
     expect(githubUrlField).toBeInTheDocument();
+    expect(instagramUrlField).toBeInTheDocument();
+  });
+
+  it("Should return error if any field are empty when submit", async () => {
+    render(<Generate />);
+
+    const buttonElement = screen.getByText("Generate Image");
+    const name = "André Souza";
+
+    fetchMock.mockResponseOnce(
+      JSON.stringify({
+        name: "André Souza",
+        id: "123",
+      })
+    );
+
+    await userEvent.click(buttonElement);
+
+    expect(mockedRouterPush).not.toBeCalled();
   });
 
   it("Should be able to redirect to qrcode page", async () => {
@@ -42,6 +65,10 @@ describe("Inputs", () => {
     );
     const githubField = screen.getByPlaceholderText(
       "https://github.com/als260502"
+    );
+
+    const instagramField = screen.getByPlaceholderText(
+      "https://instagram.com/velhoo.np"
     );
 
     const buttonElement = screen.getByText("Generate Image");
@@ -57,11 +84,14 @@ describe("Inputs", () => {
       target: { value: "https://github.com/als260502" },
     });
 
+    fireEvent.change(instagramField, {
+      target: { value: "https://www.instagram.com/velhoo.np" },
+    });
+
     fetchMock.mockResponseOnce(
       JSON.stringify({
         name: "André Souza",
-        githubUrl: "https://github.com/als260502",
-        linkedinUrl: "https://linkdein.com/in/andre-souza-dev",
+        id: "123",
       })
     );
 

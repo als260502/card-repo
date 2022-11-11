@@ -15,5 +15,6 @@ model User {
   name      String
   linkedin  String
   github    String
+  instagram String
   createdAt DateTime @default(now())
 }

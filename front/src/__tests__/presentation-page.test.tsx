@@ -15,7 +15,10 @@ jest.mock("next/router", () => {
 describe("Presentation Page", () => {
   it("Should load without crash", async () => {
     render(
-      <Presentation bio="" user={{ name: "", github: "", linkedin: "" }} />
+      <Presentation
+        bio=""
+        user={{ name: "", github: "", linkedin: "", instagram: "" }}
+      />
     );
 
     expect(
@@ -29,5 +32,10 @@ describe("Presentation Page", () => {
 
     expect(screen.getByRole("link", { name: "Github" })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Github" })).toBeInTheDocument();
+
+    expect(screen.getByRole("link", { name: "Instagram" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Instagram" })
+    ).toBeInTheDocument();
   });
 });

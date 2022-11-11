@@ -47,14 +47,16 @@ async function bootstrap() {
         name: z.string(),
         githubUrl: z.string(),
         linkedinUrl: z.string(),
+        instagramUrl: z.string(),
       })
 
-      const { name: userName, githubUrl, linkedinUrl } = createUserBody.parse(request.body);
+      const { name: userName, githubUrl, linkedinUrl, instagramUrl } = createUserBody.parse(request.body);
       const createUser = await prisma.user.create({
         data: {
           name: userName,
           github: githubUrl,
           linkedin: linkedinUrl,
+          instagram: instagramUrl,
         }
       })
 
